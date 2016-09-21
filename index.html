@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>A-FRAME</title>
+    <script src="node_modules/aframe/dist/aframe.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <a-scene fog="type: linear; color: #ECECEC; far: 200;">
+      <a-plane rotation="-90 0 0" width="500" height="500" color="#7BC8A4"></a-plane>
+
+      <a-sky color="#ECECEC"></a-sky>
+      <a-entity position="0 5 3.8">
+        <a-camera look-controls wasd-controls>
+          <a-cursor color="#2E3A87"></a-cursor>
+        </a-camera>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
