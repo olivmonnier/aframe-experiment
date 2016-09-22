@@ -21,8 +21,10 @@
           {% for n in range(0, 30) %}
             {% set x = range(-10, 10) | random %}
             {% set z = range(-10, 10) | random %}
+            {% set ry = range(0, 180) | random %}
             <a-entity template="src: tree.template; type: handlebars"
                       data-position="{{ x * 10 }} 0 {{ z * 10 }}"
+                      data-rotation="0 {{ry}} 0"
                       data-trunkcolor="#623B1C"></a-entity>
           {% endfor %}
         </script>
