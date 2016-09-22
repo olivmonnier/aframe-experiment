@@ -1,10 +1,11 @@
 var budo = require('budo')
 var babelify = require('babelify')
 
-budo('./src/app.js', {
+budo('./src/extras.js', {
   live: true,             // setup live reload
   dir: [
     './',
+    './templates',
     './node_modules'
   ],
   port: process.env.PORT || 8000,             // use this port

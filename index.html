@@ -3,17 +3,55 @@
   <head>
     <meta charset="utf-8">
     <title>A-FRAME</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nunjucks/2.3.0/nunjucks.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
     <script src="node_modules/aframe/dist/aframe.min.js" charset="utf-8"></script>
+    <!-- <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v2.5.2/dist/aframe-extras.min.js"></script> -->
+    <script src="extras.js" charset="utf-8"></script>
+    <script src="node_modules/aframe-template-component/dist/aframe-template-component.min.js" charset="utf-8"></script>
   </head>
   <body>
-    <a-scene fog="type: linear; color: #ECECEC; far: 200;">
-      <a-plane rotation="-90 0 0" width="500" height="500" color="#7BC8A4"></a-plane>
+    <a-scene fog="type: linear; color: #87CEEB; far: 300;">
+      <a-assets>
+        <a-mixin id="leaf-block"
+                 geometry="primitive: box; depth: 2.5; height: 2.5; width: 2.5"
+                 material="color: #69C181; side: double"></a-mixin>
 
-      <a-sky color="#ECECEC"></a-sky>
-      <a-entity position="0 5 3.8">
-        <a-camera look-controls wasd-controls>
-          <a-cursor color="#2E3A87"></a-cursor>
-        </a-camera>
+        <script id="forest" type="text/x-nunjucks-template">
+          {% for n in range(0, 30) %}
+            {% set x = range(-10, 10) | random %}
+            {% set z = range(-10, 10) | random %}
+            <a-entity template="src: tree.template; type: handlebars"
+                      data-position="{{ x * 10 }} 0 {{ z * 10 }}"
+                      data-trunkcolor="#623B1C"></a-entity>
+          {% endfor %}
+        </script>
+
+        <script id="clouds" type="text/x-nunjucks-template">
+          {% for n in range (0, 100) %}
+            {% set x = range(-10, 10) | random %}
+            {% set z = range(-10, 10) | random %}
+            <a-entity template="src: cloud.template; type: handlebars"
+                      data-position="{{x * 20}} 20 {{z * 20}}"></a-entity>
+          {% endfor %}
+        </script>
+      </a-assets>
+
+      <a-sky color="#87CEEB"></a-sky>
+      <a-entity light="angle:90;distance:300;intensity:1.5;penumbra:1;type:point" position="0 50 0"></a-entity>
+      <a-entity template="src: #clouds"></a-entity>
+
+      <a-plane rotation="-90 0 0" width="500" height="500" color="#7BC8A4" static-body></a-plane>
+      <a-entity template="src: #forest" position="0 2 0"></a-entity>
+
+      <a-entity id="player"
+                camera
+                universal-controls
+                kinematic-body
+                position="0 2 3.8"
+                jump-ability="maxJumps: 3;
+                              distance: 5;">
+        <a-cursor color="#2E3A87"></a-cursor>
       </a-entity>
     </a-scene>
   </body>
